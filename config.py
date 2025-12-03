@@ -1,9 +1,11 @@
 import sqlite3
 import streamlit as st
 
+
 class CadastroDB:
-    def __init__(self, db_name="cadastro.db"):
-        self.mydb = sqlite3.connect(db_name, check_same_thread=False)
+    def __init__(self):
+
+        self.mydb = st.connection("mydb", type="sql")
         self.cursor = self.mydb.cursor()
 
         # Criar tabela se não existir
