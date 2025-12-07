@@ -1,30 +1,31 @@
+import psycopg2
 import streamlit as st
-from sqlalchemy import text
+
 
 class CadastroDB:
     def __init__(self):
-        self.mydb = st.connection("mydb", type="sql")
+        # Conexão com PostgreSQL usando st.secrets
+        self.mydb = psycopg2.connect(
+            host=st.secrets["postgres"]["host"],
+            user=st.secrets["postgres"]["user"],
+            password=st.secrets["postgres"]["password"],
+            dbname=st.secrets["postgres"]["database"],
+            port=st.secrets["postgres"]["port"]
+        )
+
+        self.cursor = self.mydb.cursor()
 
         # Criar tabela se não existir
-        with self.mydb.session as session:
-            session.execute(text("""
-                CREATE TABLE IF NOT EXISTS users (
-                    id SERIAL PRIMARY KEY,
-                    name TEXT,
-                    password TEXT
-                )
-            """))
-            session.commit()
+        self.cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id SERIAL PRIMARY KEY,
+            name TEXT,
+            password TEXT
+        )
+        """)
 
-    def add_user(self, name, password):
-        with self.mydb.session as session:
-            session.execute(text("""
-                INSERT INTO users (name, password)
-                VALUES (:name, :password)
-            """), {"name": name, "password": password})
-            session.commit()
+        self.mydb.commit()
 
-    def get_users(self):
-        return self.mydb.query("SELECT * FROM users")
 
+# Instância global para reaproveitar
 db = CadastroDB()
