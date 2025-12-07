@@ -2,11 +2,11 @@ import streamlit as st
 
 class CadastroDB:
     def __init__(self):
-        # Conecta usando o bloco [connections.mydb] do secrets.toml
-        self.mydb = st.connection("mydb", type="sql")
+        # Conecta ao PostgreSQL usando o secrets.toml
+        self.conn = st.connection("mydb", type="sql")
 
     def criar_tabela(self):
-        self.mydb.execute("""
+        self.conn.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
                 name TEXT,
@@ -15,10 +15,15 @@ class CadastroDB:
         """)
 
     def inserir(self, name, password):
-        self.mydb.execute(
+        self.conn.execute(
             "INSERT INTO users (name, password) VALUES (%s, %s)",
             (name, password)
         )
 
     def listar(self):
-        return self.mydb.query("SELECT * FROM users")
+        return self.conn.query("SELECT * FROM users")
+        
+
+# ===== INSTANCIAR AQUI =====
+db = CadastroDB()
+db.criar_tabela()
