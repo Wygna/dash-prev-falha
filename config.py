@@ -1,10 +1,11 @@
 import streamlit as st
+import psycopg2
 import os
 
 class CadastroDB:
     def __init__(self):
 
-        self.mydb = st.psycopg2.connect(
+        self.mydb = psycopg2.connect(
             host = os.getenv('PGHOST'),
             port = os.getenv('PGPORT'),
             database = os.getenv('PGDATABASE'),
@@ -16,7 +17,7 @@ class CadastroDB:
 
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             name TEXT,
             password TEXT
         )
