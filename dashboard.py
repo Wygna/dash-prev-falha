@@ -8,6 +8,7 @@ from config import db
 # Modelling
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+import os
 
 
 class CadastroApp:
