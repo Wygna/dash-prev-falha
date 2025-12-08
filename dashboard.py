@@ -21,7 +21,7 @@ class CadastroApp:
                 password= st.text_input("Senha")
 
                 if st.button("Criar"):
-                    sql = "INSERT INTO users (name, password) VALUES (?, ?)"
+                    sql = "INSERT INTO users (name, password) VALUES (%s, %s)"
                     val = (name, password)
                     self.cursor.execute(sql, val)
                     self.db.commit()
