@@ -9,7 +9,7 @@ from config import db
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 import os
-cursor = db.mydb.cursor()
+
 
 
 
@@ -43,8 +43,10 @@ def login():
         username = st.text_input("Usuário")
         password = st.text_input("Senha", type="password")
         if st.button("Entrar"):
+                    cursor = db.mydb.cursor()
                     cursor.execute("SELECT 1 FROM users WHERE name=%s AND password=%s", (username, password))
                     user = cursos.fetchone()
+                    cursor.close()
                     if user:
                                 st.session_state.logged_in = True
                                 st.success("Login bem-sucedido!")
