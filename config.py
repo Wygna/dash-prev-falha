@@ -4,8 +4,7 @@ import os
 class CadastroDB:
     def __init__(self):
 
-        self.mydb = st.connection("mydb", type="sql",
-            dialect="postgresql",
+        self.mydb = st.psycopg2.connect(
             host = os.getenv('PGHOST'),
             port = os.getenv('PGPORT'),
             database = os.getenv('PGDATABASE'),
