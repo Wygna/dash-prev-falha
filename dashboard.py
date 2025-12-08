@@ -9,9 +9,7 @@ from config import db
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
 
 
 class CadastroApp:
@@ -44,10 +42,12 @@ def login():
         username = st.text_input("Usuário")
         password = st.text_input("Senha", type="password")
         if st.button("Entrar"):
-            if username == os.getenv("USER") and password == os.getenv("PASSWORD"):
-                st.session_state.logged_in = True
-                st.success("Login bem-sucedido!")
-                st.rerun()
+            if cursor.execute("SELECT 1 FROM users WHERE name=%s AND password=%s", (username, password))
+               user = cursos.fetchone()
+               if username == os.getenv("USER") and password == os.getenv("PASSWORD"):
+               st.session_state.logged_in = True
+               st.success("Login bem-sucedido!")
+               st.rerun()
             else:
                 st.error("Usuário ou senha incorretos.")    
         if st.button("Cadastrar"):
