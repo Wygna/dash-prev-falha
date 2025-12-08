@@ -1,22 +1,8 @@
-import sqlite3
-import streamlit as st
+import os
 
-
-class CadastroDB:
-    def __init__(self):
-
-        self.mydb = st.connection("mydb", type="sql")
-        self.cursor = self.mydb.cursor()
-
-        # Criar tabela se não existir
-        self.cursor.execute("""
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            password TEXT
-        )
-        """)
-        self.mydb.commit()
-
-# Instância global para reaproveitar
-db = CadastroDB()
+my_db.connect(dialect = "postgresql"
+ host = os.environ['PGHOST'],
+ port = os.environ['PGPORT'],
+ database = os.environ['PGDATABASE'],
+ username = os.environ['PGUSER'], 
+ password = os.environ['PGPASSWORD'])
