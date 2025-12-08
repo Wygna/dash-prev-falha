@@ -40,7 +40,7 @@ def login():
         username = st.text_input("Usuário")
         password = st.text_input("Senha", type="password")
         if st.button("Entrar"):
-            if db.cursor.execute("SELECT 1 FROM users WHERE name=? AND password=?", (username, password)).fetchone():
+            if db.cursor.execute("SELECT 1 FROM users WHERE name=%s AND password=%s", (username, password)).fetchone():
                 st.session_state.logged_in = True
                 st.success("Login bem-sucedido!")
                 st.rerun()
