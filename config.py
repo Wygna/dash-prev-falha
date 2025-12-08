@@ -5,11 +5,11 @@ class CadastroDB:
     def __init__(self):
 
         self.mydb = st.connection(dialect = "postgresql",
-            host = os.getenv['PGHOST'],
-            port = os.getenv['PGPORT'],
-            database = os.getenv['PGDATABASE'],
-            username = os.getenv['PGUSER'], 
-            password = os.getenv['PGPASSWORD']
+            host = os.getenv('PGHOST'),
+            port = os.getenv('PGPORT'),
+            database = os.getenv('PGDATABASE'),
+            username = os.getenv('PGUSER'), 
+            password = os.getenv('PGPASSWORD')
         )
 
         self.cursor = self.mydb.cursor()
