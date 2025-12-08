@@ -42,12 +42,12 @@ def login():
         username = st.text_input("Usuário")
         password = st.text_input("Senha", type="password")
         if st.button("Entrar"):
-            if cursor.execute("SELECT 1 FROM users WHERE name=%s AND password=%s", (username, password))
+            if cursor.execute("SELECT 1 FROM users WHERE name=%s AND password=%s", (username, password)):
                user = cursos.fetchone()
-               if username == os.getenv("USER") and password == os.getenv("PASSWORD"):
-               st.session_state.logged_in = True
-               st.success("Login bem-sucedido!")
-               st.rerun()
+               if user:
+                  st.session_state.logged_in = True
+                  st.success("Login bem-sucedido!")
+                  st.rerun()
             else:
                 st.error("Usuário ou senha incorretos.")    
         if st.button("Cadastrar"):
