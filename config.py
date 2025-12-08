@@ -9,7 +9,7 @@ class CadastroDB:
             host = os.getenv('PGHOST'),
             port = os.getenv('PGPORT'),
             database = os.getenv('PGDATABASE'),
-            username = os.getenv('PGUSER'), 
+            user = os.getenv('PGUSER'), 
             password = os.getenv('PGPASSWORD')
         )
 
