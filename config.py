@@ -5,11 +5,12 @@ class CadastroDB:
     def __init__(self):
 
         self.mydb = st.connection(dialect = "postgresql",
-        host = os.environ['PGHOST'],
-        port = os.environ['PGPORT'],
-        database = os.environ['PGDATABASE'],
-        username = os.environ['PGUSER'], 
-        password = os.environ['PGPASSWORD'])
+            host = os.environ['PGHOST'],
+            port = os.environ['PGPORT'],
+            database = os.environ['PGDATABASE'],
+            username = os.environ['PGUSER'], 
+            password = os.environ['PGPASSWORD']
+        )
 
         self.cursor = self.mydb.cursor()
 
@@ -23,5 +24,5 @@ class CadastroDB:
 
         self.mydb.commit()
 
-   # Instância global para reaproveitar
-   db = CadastroDB()
+# Instância global para reaproveitar
+db = CadastroDB()
