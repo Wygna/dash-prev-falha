@@ -1,29 +1,25 @@
-import streamlit as st
 import psycopg2
-import os
+import streamlit as st
 
 class CadastroDB:
-    def __init__(self):
+    mydb = psycopg2.connect(
+        host=st.secrets["postgres"]["host"],
+        user=st.secrets["postgres"]["user"],
+        password=st.secrets["postgres"]["password"],
+        dbname=st.secrets["postgres"]["database"],
+        port=st.secrets["postgres"]["port"]
+    )
 
-        self.mydb = psycopg2.connect(
-            host = os.getenv('PGHOST'),
-            port = os.getenv('PGPORT'),
-            database = os.getenv('PGDATABASE'),
-            user = os.getenv('PGUSER'), 
-            password = os.getenv('PGPASSWORD')
-        )
+    cursor = mydb.cursor()
 
-        self.cursor = self.mydb.cursor()
-
-        self.cursor.execute("""
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
             name TEXT,
             password TEXT
         )
-        """)
+    """)
 
-        self.mydb.commit()
+    mydb.commit()
 
-# Instância global para reaproveitar
 db = CadastroDB()
